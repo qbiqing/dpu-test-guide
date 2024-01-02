@@ -18,6 +18,23 @@ Follow through the rest of the steps. You should be able to see some RX and TX p
 
 # Running DPDK
 
+## Using DPDK v19.11
+
+Follow instructions on the user manual section 8. Use the file `Helium-DPDK19.11-Vx.yRz.tar.gz` in the shared folder.
+
+You might get some Werrors when running `make` to compile DPDK on the host. If you do, you can go into the relevant directory and remove the CFLAG `-Werror` from the Makefile. If you get a wrong pointer type warning, you can use typecasting to cast the pointer into the correct type.
+
+There is one error where the patch can be referenced [here](https://git.dpdk.org/dpdk/commit/?id=87efaea6376c8). You can apply the patch manually.
+
+On the host, run `lspci | grep b203`. Observe the first two devices have the addresses `0000:31:02.0` and `0000:31:02.1`. Bind these two virtual ports to DPDK.
+
+Correction for command to run `./build/app/testpmd`: change the flag `-I` to `-i`.
+
+
+## Using newer versions of DPDK
+
+NOTE: the host does not successfully receive packets in this mode.
+
 On the host, run `lspci | grep b203`. Observe the first two devices have the addresses `0000:31:02.0` and `0000:31:02.1`. Bind these two virtual ports to DPDK.
 
 ```bash
@@ -32,7 +49,7 @@ Run testpmd with the following command adapted for the DPDK version we are using
 sudo ./build/app/dpdk-testpmd -l 0,2,4 -a 0000:31:02.0 -a 0000:31:02.1 -- -i  --rxd=4096
 ```
 
-You will see these two errors - can ignore them.
+You will see these two errors.
 
 ```bash
 Error during enabling promiscuous mode for port 0: Operation not supported - ignore
@@ -76,5 +93,3 @@ Run testpmd with the following command:
 ```bash
 ./build/app/dpdk-testpmd -l0,1-2 -w 0002:02:00.0 -w 0002:0f:00.2 -w 0002:0f:00.3 -- -i --portmask=0x6
 ```
-
-In the testpmd shell, follow the user manual and check you get the correct responses for the commands.
