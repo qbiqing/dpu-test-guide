@@ -12,7 +12,7 @@ Differences to note:
 
 In step 2, do not include `2>/dev/null` to view the output. Before `rmmod mgmt_net`, also run `rmmod mvmgmt0`.
 
-Change the parameters of `modprobe pcie_ep` to the following: `modprobe pcie_ep host_sid=0x33000 pem_num=0 epf_num=0` to match the bus address.
+Change the parameters of `modprobe pcie_ep` to the following: `modprobe pcie_ep host_sid=0x33000 pem_num=0 epf_num=0`. Note that the `host_sid` parameter is changed to `0x33000` to match the root PCI bus address `0000:30`.
 
 Follow through the rest of the steps. You should be able to see some RX and TX packets when running `ifconfig mvmgmt0`.
 
