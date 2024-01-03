@@ -56,12 +56,6 @@ Error during enabling promiscuous mode for port 0: Operation not supported - ign
 Error during enabling promiscuous mode for port 1: Operation not supported - ignore
 ```
 
-In testpmd shell, run the following:
-```bash
-start
-show config fwd
-```
-
 On the DPU, run `lspci | grep a0f7`. Observe that the PCI addresses are the same as written on the user manual. Follow the user manual instructions to bind the ports to DPDK.
 
 If you encounter `Unknown device` error in the binding, add the following lines to `dpdk-devbind.py` (around lines 40-50):
@@ -82,13 +76,7 @@ Furthermore, modify `otx2_mbox.h` line 93 to
 #define OTX2_MBOX_VERSION (0x0009)
 ```
 
-Enable hugepages with
-
-```bash
-sysctl vm.nr_hugepages=12
-```
-
-Run testpmd with the following command:
+Follow user manual instructions to enable hugepages. Run testpmd with the following command:
 
 ```bash
 ./build/app/dpdk-testpmd -l0,1-2 -w 0002:02:00.0 -w 0002:0f:00.2 -w 0002:0f:00.3 -- -i --portmask=0x6
